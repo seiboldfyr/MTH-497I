@@ -115,14 +115,29 @@ def stddev(location, concentration):
     #given one specified assay and concentration, plot the mean of that concentration 
     means1 = np.mean(nar[:, indices], axis = 1)
     standev = np.std(nar[:, indices], axis = 1)
+    means2 = np.array(means1)
+    deriv = np.gradient(means2)
+    print(deriv)
+    x1=np.linspace(0,240,1)
     #print('Mean =',means1)
+    plt.title('Graph for Means')
+    plt.xlabel('Cycle number')
+    plt.ylabel('Concentration')
     plt.plot(x, means1, color = 'red' ) #plot each concentration 
     plt.show()
+    plt.title('Graph for Standard Deviation')
+    plt.xlabel('Cycle number')
+    plt.ylabel('Concentration')
     plt.plot(x, standev, color = 'green' )
+    plt.show()
+    plt.title('Graph for Derivatives')
+    plt.xlabel('Cycle number')
+    plt.ylabel('Concentration')
+    plt.plot(x, deriv, color = 'blue' ) #plot the derivative 
     plt.show()
     return
 
-stddev(loc1, 6)
+stddev(loc1, 1)
 
 #will always ask for input unless user types 'stop'
 while file != 'stop':

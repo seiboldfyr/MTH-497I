@@ -96,7 +96,7 @@ def assay(location):
     return
 
 ##build some regression lines
-def approx(location):
+def approxp(location):
     x=pd.read_excel(location, usecols= "B")
     ##take our boring pandas array and make it a numpy array, then kick out the extra dimension
     x1 = np.reshape(np.array(x), -1) 
@@ -113,7 +113,16 @@ def approx(location):
     plt.plot(myline, regline(myline))##regression line 
     plt.show()
     return
-approx(loc1)
+approxp(loc1)
+
+def sigmoid(z):
+    s = 1.0/(1.0 + np.exp(-1.0 * z))
+    return s
+
+def approxlog(location):
+    x=pd.read_excel(location, usecols= "B")
+    
+    return
 
 #will always ask for input unless user types 'stop'
 while file != 'stop':
