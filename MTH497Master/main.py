@@ -6,9 +6,12 @@ Created on Thu Mar 12 09:57:02 2020
 """
 
 from assay import singleWell, allWells, groupWells, concenWells, tripWells
-from approxPol import approxP
+from regressionfunctions import train, test
+#from approxPol import approxP
 from stddev import stddev
-
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 loc1 = "Assay1.xlsx"
 loc2 = "Assay2.xlsx"
@@ -20,6 +23,12 @@ loc7 = "Assay7.xlsx"
 
 file = -1 #set file to a random number in order to initialize it
 
+x=pd.read_excel(loc1, usecols="B")
+x = np.array(x).reshape(-1)
+g2=pd.read_excel(loc1, usecols="C:CT")
+
+train(x,g2)
+test(x,g2)
 while file != 'stop':
     file=str(input("Please enter an Assay number\n"))
     if(file == '1'):
