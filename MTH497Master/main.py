@@ -6,6 +6,8 @@ Created on Thu Mar 12 09:57:02 2020
 """
 
 from assay import singleWell, allWells, groupWells, concenWells, tripWells
+from approxPol import approxP
+from stddev import stddev
 
 
 loc1 = "Assay1.xlsx"
@@ -22,8 +24,29 @@ while file != 'stop':
     file=str(input("Please enter an Assay number\n"))
     if(file == '1'):
         file=str(input("Please enter which graph you would like to see\n"))
-        if(file == "single"):
-            
+        if(file == "standard deviation"):
+            file2=str(input("Please enter concentration number\n"))
+            if(file2 == '1'):
+                stddev(loc1, 1)
+            elif(file2 == '2'):
+                stddev(loc1, 2)
+            elif(file2 == '3'):
+                stddev(loc1, 3)
+            elif(file2 == '4'):
+                stddev(loc1, 4)
+            elif(file2 == '5'):
+                stddev(loc1, 5)
+            elif(file2 == '6'):
+                stddev(loc1, 6)
+            elif(file2 == '7'):
+                stddev(loc1, 7)
+            elif(file2 == '8'):
+                stddev(loc1, 8)
+                
+        
+        elif(file == "polynomial regression"):
+            approxP(loc1)
+        elif(file == "single"):
             singleWell(loc1)
         elif(file == "all"):
             allWells(loc1)
@@ -44,7 +67,28 @@ while file != 'stop':
             
     elif(file == '2'):
         file=str(input("Please enter which graph you would like to see\n"))
-        if(file == "single"):
+        if(file == "standard deviation"):
+            file2=str(input("Please enter concentration number\n"))
+            if(file2 == '1'):
+                stddev(loc2, 1)
+            elif(file2 == '2'):
+                stddev(loc2, 2)
+            elif(file2 == '3'):
+                stddev(loc2, 3)
+            elif(file2 == '4'):
+                stddev(loc2, 4)
+            elif(file2 == '5'):
+                stddev(loc2, 5)
+            elif(file2 == '6'):
+                stddev(loc2, 6)
+            elif(file2 == '7'):
+                stddev(loc2, 7)
+            elif(file2 == '8'):
+                stddev(loc2, 8)
+                
+        elif(file == "polynomial regression"):
+            approxP(loc2)
+        elif(file == "single"):
             singleWell(loc2)
         elif(file == "all"):
             allWells(loc2)
@@ -65,7 +109,28 @@ while file != 'stop':
             
     elif(file == '3'):
         file=str(input("Please enter which graph you would like to see\n"))
-        if(file == "single"):
+        if(file == "standard deviation"):
+            file2=str(input("Please enter concentration number\n"))
+            if(file2 == '1'):
+                stddev(loc3, 1)
+            elif(file2 == '2'):
+                stddev(loc3, 2)
+            elif(file2 == '3'):
+                stddev(loc3, 3)
+            elif(file2 == '4'):
+                stddev(loc3, 4)
+            elif(file2 == '5'):
+                stddev(loc3, 5)
+            elif(file2 == '6'):
+                stddev(loc3, 6)
+            elif(file2 == '7'):
+                stddev(loc3, 7)
+            elif(file2 == '8'):
+                stddev(loc3, 8)
+        
+        elif(file == "polynomial regression"):
+            approxP(loc3)        
+        elif(file == "single"):
             singleWell(loc3)
         elif(file == "all"):
             allWells(loc3)
@@ -86,7 +151,28 @@ while file != 'stop':
             
     elif(file == '4'):
         file=str(input("Please enter which graph you would like to see\n"))
-        if(file == "single"):
+        if(file == "standard deviation"):
+            file2=str(input("Please enter concentration number\n"))
+            if(file2 == '1'):
+                stddev(loc4, 1)
+            elif(file2 == '2'):
+                stddev(loc4, 2)
+            elif(file2 == '3'):
+                stddev(loc4, 3)
+            elif(file2 == '4'):
+                stddev(loc4, 4)
+            elif(file2 == '5'):
+                stddev(loc4, 5)
+            elif(file2 == '6'):
+                stddev(loc4, 6)
+            elif(file2 == '7'):
+                stddev(loc4, 7)
+            elif(file2 == '8'):
+                stddev(loc4, 8)
+        
+        elif(file == "polynomial regression"):
+            approxP(loc4)        
+        elif(file == "single"):
             singleWell(loc4)
         elif(file == "all"):
             allWells(loc4)
@@ -107,7 +193,28 @@ while file != 'stop':
         
     elif(file == '5'):
         file=str(input("Please enter which graph you would like to see\n"))
-        if(file == "single"):
+        if(file == "standard deviation"):
+            file2=str(input("Please enter concentration number\n"))
+            if(file2 == '1'):
+                stddev(loc5, 1)
+            elif(file2 == '2'):
+                stddev(loc5, 2)
+            elif(file2 == '3'):
+                stddev(loc5, 3)
+            elif(file2 == '4'):
+                stddev(loc5, 4)
+            elif(file2 == '5'):
+                stddev(loc5, 5)
+            elif(file2 == '6'):
+                stddev(loc5, 6)
+            elif(file2 == '7'):
+                stddev(loc5, 7)
+            elif(file2 == '8'):
+                stddev(loc5, 8)
+        
+        elif(file == "polynomial regression"):
+            approxP(loc5)        
+        elif(file == "single"):
             singleWell(loc5)
         elif(file == "all"):
             allWells(loc5)
@@ -128,7 +235,28 @@ while file != 'stop':
         
     elif(file == '6'):
         file=str(input("Please enter which graph you would like to see\n"))
-        if(file == "single"):
+        if(file == "standard deviation"):
+            file2=str(input("Please enter concentration number\n"))
+            if(file2 == '1'):
+                stddev(loc6, 1)
+            elif(file2 == '2'):
+                stddev(loc6, 2)
+            elif(file2 == '3'):
+                stddev(loc6, 3)
+            elif(file2 == '4'):
+                stddev(loc6, 4)
+            elif(file2 == '5'):
+                stddev(loc6, 5)
+            elif(file2 == '6'):
+                stddev(loc6, 6)
+            elif(file2 == '7'):
+                stddev(loc6, 7)
+            elif(file2 == '8'):
+                stddev(loc6, 8)
+         
+        elif(file == "polynomial regression"):
+            approxP(loc6)              
+        elif(file == "single"):
             singleWell(loc6)
         elif(file == "all"):
             allWells(loc6)
@@ -149,7 +277,28 @@ while file != 'stop':
             
     elif(file == '7'):
         file=str(input("Please enter which graph you would like to see\n"))
-        if(file == "single"):
+        if(file == "standard deviation"):
+            file2=str(input("Please enter concentration number\n"))
+            if(file2 == '1'):
+                stddev(loc7, 1)
+            elif(file2 == '2'):
+                stddev(loc7, 2)
+            elif(file2 == '3'):
+                stddev(loc7, 3)
+            elif(file2 == '4'):
+                stddev(loc7, 4)
+            elif(file2 == '5'):
+                stddev(loc7, 5)
+            elif(file2 == '6'):
+                stddev(loc7, 6)
+            elif(file2 == '7'):
+                stddev(loc7, 7)
+            elif(file2 == '8'):
+                stddev(loc7, 8)
+        
+        elif(file == "polynomial regression"):
+            approxP(loc7)        
+        elif(file == "single"):
             singleWell(loc7)
         elif(file == "all"):
             allWells(loc7)

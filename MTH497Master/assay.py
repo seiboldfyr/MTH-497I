@@ -8,6 +8,7 @@ Created on Thu Mar 12 10:03:27 2020
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+#from phase import phase1
 
 
 def singleWell(location):
