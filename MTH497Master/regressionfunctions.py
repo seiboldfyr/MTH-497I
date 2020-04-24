@@ -9,8 +9,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
+
 def train(x, g2):
-    
     nar = g2.to_numpy() #convert g2 to numpy array
     a1 = [0]*8
     a2 = [0]*8
@@ -29,19 +29,29 @@ def train(x, g2):
         phase1, phase2, x1, x2 = section(x, avginlist)
         phase1 = normalize(phase1)
         phase2 = normalize(phase2)
-        if len(phase1) == 0 or len(phase2)==0:
+        if len(phase1) == 0 or len(phase2) == 0:
             continue
         a1[con],b1[con],c1[con],error1[con] = sigmoidtrain(x1, phase1)
         a2[con],b2[con],c2[con],error2[con] = sigmoidtrain(x2, phase2)
-        
-def test(x,g2):
+
+    return [a1, a2, b1, b2, c1, c2, error1, error2]
+
+def test(x,g2, sigresults):
+    a1expec = sigresults[0]
+    a2expec = sigresults[1]
+    b1expec = sigresults[2]
+    b2expec = sigresults[3]
+    c1expec = sigresults[4]
+    c2expec = sigresults[5]
+    e1expec = sigresults[6]
+    e2expec = sigresults[7]
+    g2 = g2.to_numpy()
     for i in range(1, len(x)):
-         inlist = g2(i)
-         #inlist = normalize(inlist)
-         phase1, phase2 = section(x, inlist)
+         inlist = g2[:, i]
+         phase1, phase2, x1, x2 = section(x, inlist)
          phase1 = normalize(phase1)
          phase2 = normalize(phase2)
-         sigmoidtest(x, inlist, aexpec, bexpec, cexpec, errorexpec)
+         sigmoidtest(x, inlist, a1expec, b1expec, c1expec, e1expec)
          
 def section(x, inlist):
     inlist = np.array(inlist)
@@ -52,50 +62,45 @@ def section(x, inlist):
     #calculates second derivative
     deriv2 = np.gradient(deriv)  
 
-
     startpoint = 0
-    endpoint = 0
-    for i in range(len(deriv2)-1):
-        #print('dif')
-        #print(deriv2[i]-deriv2[i+1])  
-        #print('i',i, deriv2[i],deriv2[i]-deriv2[i+1])
-        #print(i)
-        #print('deriv2')
-        #print(deriv2[i])
+    midpoint = 0
+    endpoint = len(inlist) - 1
+    for i in range(10, len(deriv2)-1):
+        if deriv[i] < 0 and deriv[i+1] >= 0:
+            startpoint = i
         if (deriv2[i]-deriv2[i+1])<-7:
-            #start decreasing
-            if startpoint == 0:
-                startpoint = i
-       
-        if deriv2[i] <= -10 and startpoint != 0 :
-            endpoint = i+1
-    if endpoint == 0:
-        endpoint = len(inlist)-1
-    print(startpoint)
-    print(endpoint)
-    phase2 = inlist[startpoint:endpoint]
-    phase1 = inlist[30:startpoint-6]
-    x1 = x[30:startpoint-6]
-    x2 = x[startpoint:endpoint]
-    #print(phase1)
-    #print(phase2)
-    
+            midpoint = i
+            break
+
+    troughstart = False
+    for i in range(midpoint, len(deriv2) - 1):
+        if deriv2[i] < 0:
+            troughstart = True
+        if troughstart and deriv2[i] > 0:
+            endpoint = i+2
+            break
+
+    phase2 = inlist[midpoint:endpoint]
+    phase1 = inlist[startpoint:midpoint-6]
+    x1 = x[startpoint:midpoint-6]
+    x2 = x[midpoint:endpoint]
+
     plt.title('Graph for phase 2')
     plt.xlabel('Cycle number')
     plt.ylabel('Concentration')
-    plt.plot(x2, phase2, color = 'red' ) #plot each concentration 
+    plt.plot(x2, phase2, color='red' ) #plot each concentration
     #plt.xlim(startpoint, endpoint)
-    plt.ylim(0,.8)
+    # plt.ylim(0,.8)
     plt.show()
-    
+
     plt.title('Graph for phase 1')
     plt.xlabel('Cycle number')
     plt.ylabel('Concentration')
-    plt.plot(x1, phase1, color = 'red' ) #plot each concentration 
+    plt.plot(x1, phase1, color='red' ) #plot each concentration
     #plt.xlim(30, startpoint-6)
-    plt.ylim(0,.05)
+    # plt.ylim(0,.05)
     plt.show()
-    
+
     return phase1, phase2, x1, x2
 
 def normalize(inlist):
@@ -104,8 +109,9 @@ def normalize(inlist):
     newinlist = [item - (np.min(newinlist) - 0.0000001) for item in newinlist] #downshift to 0
     newinlist = [item/(np.max(newinlist)-np.min(newinlist)) for item in newinlist] #normalize
     return newinlist
+
 def sigmoid(x, a, b, c):
-     y = 1 / (1 + c*np.exp(-b*(x-a))) 
+     y = 1 / (1 + c*np.exp(-b*(x-a)))
      return y
  
 def predictedsig(x, a, b, c):
@@ -114,11 +120,8 @@ def predictedsig(x, a, b, c):
     y = sigmoid(x, a, b, c)
     
 def sigmoidtrain(x, inlist):
-    #x = np.linspace(0, len(inlist), 1)
-    #print(x)
-    #print(inlist)
-    parameters, pcov = curve_fit(sigmoid, x, inlist, p0=[110, 0.001, 100])
-    #print(parameters)
+    parameters, pcov = curve_fit(sigmoid, x, inlist, p0=[110, 0.001, .5])
+    # print(parameters)
     #print(pcov)
     y = sigmoid(x, *parameters)
     a = parameters[0]
