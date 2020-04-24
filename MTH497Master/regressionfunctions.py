@@ -33,6 +33,8 @@ def train(x, g2):
             continue
         a1[con],b1[con],c1[con],error1[con] = sigmoidtrain(x1, phase1)
         a2[con],b2[con],c2[con],error2[con] = sigmoidtrain(x2, phase2)
+        plt.plot(x1, sigmoid(x1, a1[con], b1[con], c1[con]))
+        plt.show()
 
     return [a1, a2, b1, b2, c1, c2, error1, error2]
 
@@ -45,14 +47,21 @@ def test(x,g2, sigresults):
     c2expec = sigresults[5]
     e1expec = sigresults[6]
     e2expec = sigresults[7]
+    #print(a1expec)
     g2 = g2.to_numpy()
-    for i in range(1, len(x)):
-         inlist = g2[:, i]
-         phase1, phase2, x1, x2 = section(x, inlist)
-         phase1 = normalize(phase1)
-         phase2 = normalize(phase2)
-         sigmoidtest(x, inlist, a1expec, b1expec, c1expec, e1expec)
-         
+    conc=0
+    for i in range(1, g2.shape[1]):
+        if i%3:
+            conc+=1
+        if conc == 8:
+            conc = 0
+        inlist = g2[:, i]
+        phase1, phase2, x1, x2 = section(x, inlist)
+        phase1 = normalize(phase1)
+        phase2 = normalize(phase2)
+        sigmoidtest([i/50 for i in range(50)], phase1, a1expec[conc], b1expec[conc], c1expec[conc], e1expec[conc])
+        if i == 2:
+            break
 def section(x, inlist):
     inlist = np.array(inlist)
     #print(inlist)
@@ -115,15 +124,16 @@ def sigmoid(x, a, b, c):
      return y
  
 def predictedsig(x, a, b, c):
-    b = 5.16E-2
-    c = 1.23E2
     y = sigmoid(x, a, b, c)
+    return y
     
 def sigmoidtrain(x, inlist):
     parameters, pcov = curve_fit(sigmoid, x, inlist, p0=[110, 0.001, .5])
     # print(parameters)
     #print(pcov)
     y = sigmoid(x, *parameters)
+    plt.plot(x,y)
+    plt.show()
     a = parameters[0]
     b = parameters[1]
     c = parameters[2]
@@ -134,10 +144,15 @@ def sigmoidtrain(x, inlist):
     return error, a, b, c
 
 def sigmoidtest(x, inlist, a,b,c,expectederror):
+    print(x, a, b, c)
     #x = np.linspace(0, len(inlist), 1)
-    y = predictedsig(x,a,b,c)
+    y = sigmoid(x,a,b,c)
+    print(y)
+    plt.plot(x,y)
+    plt.show()
     error=0
     for row in range (0,len(inlist)):
+        #print(inlist[row],  row)
         error += (inlist[row] - y[row])**2
         
     error = np.sqrt(error/len(inlist))
