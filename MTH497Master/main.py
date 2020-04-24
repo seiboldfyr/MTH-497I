@@ -23,12 +23,14 @@ loc7 = "Assay7.xlsx"
 
 file = -1 #set file to a random number in order to initialize it
 
-x=pd.read_excel(loc1, usecols="B")
+x = pd.read_excel(loc1, usecols="B")
 x = np.array(x).reshape(-1)
-g2=pd.read_excel(loc1, usecols="C:CT")
+g2 = pd.read_excel(loc1, usecols="C:CT")
 
-train(x,g2)
-test(x,g2)
+#sigresults holds: [a1, a2, b1, b2, c1, c2, error1, error2]
+sigresults = train(x, g2)
+test(x, g2, sigresults)
+
 while file != 'stop':
     file=str(input("Please enter an Assay number\n"))
     if(file == '1'):
