@@ -31,8 +31,8 @@ def train(x, g2):
         phase2 = normalize(phase2)
         if len(phase1) == 0 or len(phase2) == 0:
             continue
-        a1[con],b1[con],c1[con],error1[con] = sigmoidtrain(x1, phase1)
-        a2[con],b2[con],c2[con],error2[con] = sigmoidtrain(x2, phase2)
+        error1[con], a1[con],b1[con],c1[con] = sigmoidtrain(x1, phase1)
+        error2[con], a2[con],b2[con],c2[con] = sigmoidtrain(x2, phase2)
         plt.plot(x1, sigmoid(x1, a1[con], b1[con], c1[con]))
         plt.show()
 
